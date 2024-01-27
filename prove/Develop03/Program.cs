@@ -32,6 +32,7 @@ class Program
             Console.WriteLine(scripture.GetDisplayText());
             stopwatch.Start();
             string response;
+            Console.WriteLine();
             Console.WriteLine("Press ENTER to continue or type QUIT to exit: ");
             response = Console.ReadLine();
             do
@@ -39,7 +40,7 @@ class Program
                 Console.Clear();
                 scripture.HideRandomWords(3);
                 Console.WriteLine(scripture.GetDisplayText());
-
+                Console.WriteLine();
                 Console.WriteLine("Press ENTER to continue or type QUIT to exit: ");
                 response = Console.ReadLine();
 
@@ -68,6 +69,7 @@ class Program
             Console.WriteLine(scripture.GetDisplayText());
             stopwatch.Start();
             string response;
+            Console.WriteLine();
             Console.WriteLine("Press ENTER to continue or type QUIT to exit: ");
             response = Console.ReadLine();
 
@@ -76,7 +78,7 @@ class Program
                 Console.Clear();
                 scripture.HideRandomWords(3);
                 Console.WriteLine(scripture.GetDisplayText());
-
+                Console.WriteLine();
                 Console.WriteLine("Press ENTER to continue or type QUIT to exit: ");
                 response = Console.ReadLine();
 
