@@ -83,7 +83,7 @@ public class GoalManager
     }
     public void CreateGoal()
     {
-        Console.WriteLine("The types of goals are: \n\t1. Simple Goal \n\t2. Eternal Goal \n\t3. Checklist Goal");
+        Console.WriteLine("The types of goals are: \n\t1. Simple Goal \n\t2. Eternal Goal \n\t3. Checklist Goal \n\t4. Negative Goal");
         Console.Write("What kind of goal would you like to create? ");
         int userChoiceGoal = int.Parse(Console.ReadLine());
         Console.Write("What is the name of your goal? ");
@@ -111,6 +111,11 @@ public class GoalManager
             ChecklistGoal checklistGoal = new ChecklistGoal(name, description, points, target, bonus);
             _goals.Add(checklistGoal);
         }
+        else if (userChoiceGoal == 4)
+        {
+            NegativeGoal negativeGoal = new NegativeGoal(name, description, points);
+            _goals.Add(negativeGoal);
+        }
     }
     public void RecordEvent()
     {
@@ -127,6 +132,13 @@ public class GoalManager
             {
                 _score += _goals[goalRecord - 1].GetBonus();
             }
+        }
+        else if (objectType == typeof(NegativeGoal))
+        {
+            Console.Write("You realize you'd lose the associated points if you record a negative goal? Press enter to continue: ");
+            Console.ReadLine();
+            _goals[goalRecord - 1].RecordEvent();
+            _score -= _goals[goalRecord - 1].GetPoints();
         }
         else
         {
@@ -189,6 +201,11 @@ public class GoalManager
                     
                     checklistGoal.SetAmountCompleted(int.Parse(partsDetails[5]));
                     _goals.Add(checklistGoal);
+                }
+                else if(goalType == "NegativeGoal")
+                {
+                    NegativeGoal negativeGoal = new NegativeGoal(name, description, points);
+                    _goals.Add(negativeGoal);
                 }
                 _score += points;
             }
