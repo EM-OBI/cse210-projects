@@ -3,7 +3,7 @@ public class PediatricPatient : Patient
     private bool _growthComplete;
     private string _stageDentition;
 
-    public PediatricPatient(string fName, string lName, string id, string gender, int age, string stageDentition) : base(fName, lName, id, gender, age)
+    public PediatricPatient(string fName, string lName, string id, string gender, int age, string stageDentition, string type) : base(fName, lName, id, gender, age, type)
     {
         _stageDentition = stageDentition;
         if (gender == "F" && age > 17)
@@ -26,7 +26,7 @@ public class PediatricPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return "";
+        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_growthComplete}||{_stageDentition}:{base.GetType()}";
     }
 
 }

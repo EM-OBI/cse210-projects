@@ -2,7 +2,7 @@ public class ConsPatient : Patient
 {
     private bool _isNecrotic;
 
-    public ConsPatient(string fName, string lName, string id, string gender, int age) : base(fName, lName, id, gender, age)
+    public ConsPatient(string fName, string lName, string id, string gender, int age, string type) : base(fName, lName, id, gender, age, type)
     {
         _isNecrotic = false;
     }
@@ -17,7 +17,7 @@ public class ConsPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return "";
+        return $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_isNecrotic}:{base.GetType()}";
     }
 
 }

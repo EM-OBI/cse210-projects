@@ -3,7 +3,7 @@ public class PerioPatient : Patient
     private double _ohiScore;
     private string _ohiStatus;
 
-    public PerioPatient(string fName, string lName, string id, string gender, int age, double ohiScore) : base(fName, lName, id, gender, age)
+    public PerioPatient(string fName, string lName, string id, string gender, int age, double ohiScore, string type) : base(fName, lName, id, gender, age, type)
     {
         if (ohiScore <= 1.2)
         {
@@ -26,7 +26,7 @@ public class PerioPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return "";
+        return $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_ohiStatus}||{_ohiScore}";
     }
 
 }

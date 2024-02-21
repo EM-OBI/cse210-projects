@@ -3,7 +3,7 @@ public class OrthoPatient : Patient
     private string _malocclusion;
     private int _anglesClass;
 
-    public OrthoPatient(string fName, string lName, string id, string gender, int age) : base(fName, lName, id, gender, age)
+    public OrthoPatient(string fName, string lName, string id, string gender, int age, string type) : base(fName, lName, id, gender, age, type)
     {
         _malocclusion = "";
         _anglesClass = 0;
@@ -23,7 +23,7 @@ public class OrthoPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return "";
+        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_malocclusion}||{_anglesClass}:{base.GetType()}";
     }
 
 }
