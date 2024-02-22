@@ -311,7 +311,7 @@ public class AppointmentManager
         try
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
-            List<Doctor> _doctors = new List<Doctor>();
+            // List<Doctor> _doctors = new List<Doctor>();
             bool isFree;
             foreach (string line in lines)
             {
@@ -449,9 +449,10 @@ public class AppointmentManager
             int patientToBook = int.Parse(Console.ReadLine());
             Console.WriteLine("Appointment date (yyyy-MM-dd HH:mm): ");
             DateTime dateAndTime = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine("X");
             Patient selectedPatient = _patients[patientToBook - 1];
+            List<Patient> bookedPatients = new List<Patient>();
             selectedPatient.BookAppointmentDate(dateAndTime);
+            bookedPatients.Add(selectedPatient);
             SeeAvailableDoctors();
 
 
@@ -507,7 +508,7 @@ public class AppointmentManager
             string nameFile = "bookedpatients.txt";
             using (StreamWriter outputFile = new StreamWriter(nameFile, true))
             {
-                foreach(Patient p in _patients)
+                foreach(Patient p in bookedPatients)
                 {
                     {
                         outputFile.WriteLine($"{p.GetStringRepresentation()}");
