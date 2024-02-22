@@ -40,10 +40,6 @@ public abstract class Patient
     {
         return _type;
     }
-    public void SetDoctor (Doctor doctor)
-    {
-        _doctor = doctor;
-    }
     public abstract void BookAppointmentDate(DateTime appointmentDate);
 
     public string GetDetailsString()

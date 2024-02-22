@@ -12,66 +12,61 @@ public class AppointmentManager
     }
     public void Start()
     {
-        int userChoice = 0;
+        Console.Write("Are you an admin? yes/no: ");
+        string admin = Console.ReadLine().ToLower();
+        if (admin == "yes")
         {
-            Console.Write("Are you an admin? yes/no: ");
-            string admin = Console.ReadLine().ToLower();
-            if (admin == "yes")
+            Console.Write("Enter your admin password: ");
+            string password = Console.ReadLine();
+            if (password == _password)
             {
-                Console.Write("Enter your admin password: ");
-                string password = Console.ReadLine();
-                if (password == _password)
+                while(true)
                 {
-                    while(true)
+                    Console.WriteLine("\t1. Create new Patient \n\t2. Create new Doctor \n\t3. See all patients \n\t4. See alldoctors \n\t5. See available doctors \n\t6. Make doctor available \n\t7. Book appointment \n\t8. Quit");
+                    int adminChoice = int.Parse(Console.ReadLine());
+                    if (adminChoice == 8)
                     {
-                        Console.WriteLine("\t1. Create new Patient \n\t2. Create new Doctor \n\t3. See all patients \n\t4. See all doctors \n\t5. See available doctors \n\t6. Make doctor available \n\t7. Book appointment \n\t8. Quit");
-                        int adminChoice = int.Parse(Console.ReadLine());
-                        if (adminChoice == 8)
-                        {
-                            break;
-                        }
-                        else if (adminChoice == 1)
-                        {
-                            CreatePatient();
-                        }
-                        else if (adminChoice == 2)
-                        {
-                            CreateDoctor();
-                        }
-                        else if (adminChoice == 3)
-                        {
-                            SeeAllPatients();
-                        }
-                        else if (adminChoice == 4)
-                        {
-                            SeeAllDoctors();
-                        }
-                        else if (adminChoice == 5)
-                        {
-                            SeeAvailableDoctors();
-                        }
-                        else if (adminChoice == 6)
-                        {
-                            MakeDoctorAvailable();
-                        }
-                        else if (adminChoice == 7)
-                        {
-                            BookAppointment();
-                        }
-                    }  
-                }
-                else
-                {
-                    Console.WriteLine("Wrong admin password! Start program and try again!");
-                }
+                        break;
+                    }
+                    else if (adminChoice == 1)
+                    {
+                        CreatePatient();
+                    }
+                    else if (adminChoice == 2)
+                    {
+                        CreateDoctor();
+                    }
+                    else if (adminChoice == 3)
+                    {
+                        SeeAllPatients();
+                    }
+                    else if (adminChoice == 4)
+                    {
+                        SeeAllDoctors();
+                    }
+                    else if (adminChoice == 5)
+                    {
+                        SeeAvailableDoctors();
+                    }
+                    else if (adminChoice == 6)
+                    {
+                        MakeDoctorAvailable();
+                    }
+                    else if (adminChoice == 7)
+                    {
+                        BookAppointment();
+                    }
+                }  
             }
-            else if (admin == "no")
+            else
             {
-                Console.WriteLine("Only admins can access. Thank you!");
-            } 
-                
-                
+                Console.WriteLine("Wrong admin password! Start program and try again!");
+            }
         }
+        else if (admin == "no")
+        {
+            Console.WriteLine("Only admins can access. Thank you!");
+        } 
     }
     public void CreatePatient()
     {
@@ -423,8 +418,6 @@ public class AppointmentManager
                 if (patientType == "Conservative Dentistry")
                 {
                     ConsPatient consPatient = new ConsPatient(fName, lName, id, gender, age, patientType);
-                    // simpleGoal.SetCompletedStatus(bool.Parse(partsDetails[3]));
-        
                     _patients.Add(consPatient);
                 }
                 else if(patientType == "Orthodontics")
@@ -452,7 +445,6 @@ public class AppointmentManager
                     _patients.Add(perioPatient);
                 }
             }
-            string nameFile = "bookedpatients.txt";
             Console.WriteLine("Patient for appointment: ");
             int patientToBook = int.Parse(Console.ReadLine());
             Console.WriteLine("Appointment date (yyyy-MM-dd HH:mm): ");
@@ -512,7 +504,7 @@ public class AppointmentManager
                 Console.WriteLine($"An error occured: {ex.Message}");
             }
 
-
+            string nameFile = "bookedpatients.txt";
             using (StreamWriter outputFile = new StreamWriter(nameFile, true))
             {
                 foreach(Patient p in _patients)
