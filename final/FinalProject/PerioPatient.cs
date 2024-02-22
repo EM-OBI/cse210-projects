@@ -26,7 +26,7 @@ public class PerioPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_ohiStatus}||{_ohiScore}";
+        return $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_ohiStatus}||{_ohiScore}||{_appointmentDate}={base.GetType()}";
     }
 
 }

@@ -26,7 +26,7 @@ public class PediatricPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_growthComplete}||{_stageDentition}:{base.GetType()}";
+        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_growthComplete}||{_stageDentition}||{_appointmentDate}={base.GetType()}";
     }
 
 }

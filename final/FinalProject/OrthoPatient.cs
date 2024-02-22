@@ -23,7 +23,7 @@ public class OrthoPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_malocclusion}||{_anglesClass}:{base.GetType()}";
+        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_malocclusion}||{_anglesClass}||{_appointmentDate}={base.GetType()}";
     }
 
 }

@@ -5,7 +5,6 @@ public class Doctor
     private string _specialty;
     private bool _isFree;
     private int _id;
-    private List<string> _clinicDays;
 
     public Doctor(string firstName, string lastName, string specialty, int id)
     {
@@ -14,7 +13,7 @@ public class Doctor
         _specialty = specialty;
         _id = id;
         _isFree = false;
-        _clinicDays = new List<string>(); 
+       
     }
     public Doctor(string firstName, string lastName, string specialty, int id, bool isFree)
     {
@@ -23,19 +22,7 @@ public class Doctor
         _specialty = specialty;
         _id = id;
         _isFree = isFree;
-        _clinicDays = new List<string>(); 
-    }
 
-    public void AddClinicDay(string day)
-    {
-        _clinicDays.Add(day);
-    }
-    public void ListClinicDays(List<string> clinicDays)
-    {
-        foreach (string day in clinicDays)
-        {
-            Console.Write(day);
-        }
     }
     public string GetName()
     {

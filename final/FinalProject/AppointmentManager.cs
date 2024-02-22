@@ -1,12 +1,14 @@
 public class AppointmentManager
 {
-    private List<Patient> _patients = new List<Patient>();
-    private List<Doctor> _doctors = new List<Doctor>();
+    private List<Patient> _patients;
+    private List<Doctor> _doctors;
     private string _password = "77*7times";
 
     public AppointmentManager()
     {
-
+        _patients = new List<Patient>();
+        _doctors = new List<Doctor>();
+        Start();
     }
     public void Start()
     {
@@ -65,7 +67,7 @@ public class AppointmentManager
             }
             else if (admin == "no")
             {
-                Console.WriteLine("Welcome user, what would you like to do today?");
+                Console.WriteLine("Only admins can access. Thank you!");
             } 
                 
                 
@@ -73,6 +75,7 @@ public class AppointmentManager
     }
     public void CreatePatient()
     {
+        // _patients = new List<Patient>();
         Random randomId = new Random();
         int id = randomId.Next(0, 100000000);
         Console.Write("First Name: ");
@@ -91,18 +94,21 @@ public class AppointmentManager
         {
             type = "Conservative Dentistry";
             ConsPatient consPatient = new ConsPatient(firstName, lastName, patientId, gender, age, type);
+            // BookAppointment(consPatient);
             _patients.Add(consPatient);
         }
         else if (type == "2")
         {
             type = "Orthodontics";
             OrthoPatient orthoPatient = new OrthoPatient(firstName, lastName, patientId, gender, age, type);
+            // BookAppointment(orthoPatient);
             _patients.Add(orthoPatient);
         }
         else if (type == "3")
         {
             type = "Oral and Maxillofacial Surgery";
             OralSurgeryPatient oralSurgeryPatient = new OralSurgeryPatient(firstName, lastName, patientId, gender, age, type);
+            // BookAppointment(oralSurgeryPatient);
             _patients.Add(oralSurgeryPatient);
         }
         else if (type == "4")
@@ -124,6 +130,7 @@ public class AppointmentManager
                 stage = "permanent";
             }
             PediatricPatient pediatricPatient = new PediatricPatient(firstName, lastName, patientId, gender, age, stage, type);
+            // BookAppointment(pediatricPatient);
             _patients.Add(pediatricPatient);
         }
         else if (type == "5")
@@ -132,16 +139,10 @@ public class AppointmentManager
             Console.Write("Enter OHI score: ");
             double ohiScore = Double.Parse(Console.ReadLine());
             PerioPatient perioPatient = new PerioPatient(firstName, lastName, patientId, gender, age, ohiScore, type);
+            // BookAppointment(perioPatient);
             _patients.Add(perioPatient);
         }
-        string fileName = "patients.txt";
-        using (StreamWriter outputFile = new StreamWriter(fileName, true))
-        {
-            foreach (Patient patient in _patients)
-            {
-                outputFile.WriteLine($"{patient.GetStringRepresentation()}");
-            }
-        }
+        SavePatient();
     }
     public void CreateDoctor()
     {
@@ -175,10 +176,35 @@ public class AppointmentManager
             specialty = "Periodontics";
         }
         Doctor doctor = new Doctor(firstName, lastName, specialty, id);
+        _doctors.Add(doctor);
+        SaveDoctor();
+    }
+    public void SaveDoctor()
+    {
         string fileName = "doctors.txt";
         using (StreamWriter outputFile = new StreamWriter(fileName, true))
         {
-            outputFile.WriteLine($"{doctor.GetStringRepresentation()}");
+            foreach(Doctor d in _doctors)
+            {
+
+                {
+                    outputFile.WriteLine($"{d.GetStringRepresentation()}");
+                }
+            }
+        }
+        
+    }
+    public void SavePatient()
+    {
+        string fileName = "patients.txt";
+        using (StreamWriter outputFile = new StreamWriter(fileName, true))
+        {
+            foreach(Patient p in _patients)
+            {
+                {
+                    outputFile.WriteLine($"{p.GetStringRepresentation()}");
+                }
+            }
         }
     }
     public void SeeAllPatients()
@@ -188,10 +214,10 @@ public class AppointmentManager
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
         
-            List<Patient> _loadPatient = new List<Patient>();
-            foreach (string line in lines.Skip<string>(1))
+            List<Patient> _patients = new List<Patient>();
+            foreach (string line in lines)
             {
-                string[] partsLine = line.Split(":");
+                string[] partsLine = line.Split("=");
 
                 string patientType = partsLine[1];
                 string patientStuff = partsLine[0];
@@ -254,7 +280,7 @@ public class AppointmentManager
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
         
-            List<Doctor> _loadDoctor = new List<Doctor>();
+            List<Doctor> _doctors = new List<Doctor>();
             foreach (string line in lines)
             {
                 string[] partsLine = line.Split(":");
@@ -285,11 +311,12 @@ public class AppointmentManager
     }
     public void MakeDoctorAvailable()
     {
+        SeeAllDoctors();
         string fileName = "doctors.txt";
         try
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
-            List<Doctor> _loadDoctor = new List<Doctor>();
+            List<Doctor> _doctors = new List<Doctor>();
             bool isFree;
             foreach (string line in lines)
             {
@@ -337,7 +364,7 @@ public class AppointmentManager
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
         
-            List<Doctor> _loadDoctor = new List<Doctor>();
+            List<Doctor> _doctors = new List<Doctor>();
             bool isFree;
             foreach (string line in lines)
             {
@@ -371,6 +398,134 @@ public class AppointmentManager
     }
     public void BookAppointment()
     {
+         
+        try
+        {
+            SeeAllPatients();
+            string fileName = "patients.txt";
+            string[] lines = System.IO.File.ReadAllLines(fileName);
+        
+            // List<Patient> _loadPatient = new List<Patient>();
+            foreach (string line in lines)
+            {
+                string[] partsLine = line.Split("=");
 
+                string patientType = partsLine[1];
+                string patientStuff = partsLine[0];
+                string[] patientDetails = patientStuff.Split("||");
+                string name = patientDetails[0];
+                string[] patientName = name.Split(",");
+                string lName = patientName[1];
+                string fName = patientName[0];
+                string gender = patientDetails[1];
+                int age = int.Parse(patientDetails[2]);
+                string id = patientDetails[3];
+                if (patientType == "Conservative Dentistry")
+                {
+                    ConsPatient consPatient = new ConsPatient(fName, lName, id, gender, age, patientType);
+                    // simpleGoal.SetCompletedStatus(bool.Parse(partsDetails[3]));
+        
+                    _patients.Add(consPatient);
+                }
+                else if(patientType == "Orthodontics")
+                {
+                    OrthoPatient orthoPatient = new OrthoPatient(fName, lName, id, gender, age, patientType);
+                    
+                    _patients.Add(orthoPatient);
+                }
+                else if(patientType == "Oral and Maxillofacial Surgery")
+                {
+                    OralSurgeryPatient oralSurgeryPatient = new OralSurgeryPatient(fName, lName, id, gender, age, patientType);
+                    
+                    _patients.Add(oralSurgeryPatient);
+                }
+                else if(patientType == "Pedodontics")
+                {
+                    string stage = patientDetails[4];
+                    PediatricPatient pediatricPatient = new PediatricPatient(fName, lName, id, gender, age, stage, patientType);
+                    _patients.Add(pediatricPatient);
+                }
+                else if(patientType == "Periodontics")
+                {
+                    double ohi = double.Parse(patientDetails[4]);
+                    PerioPatient perioPatient = new PerioPatient(fName, lName, id, gender, age, ohi, patientType);
+                    _patients.Add(perioPatient);
+                }
+            }
+            string nameFile = "bookedpatients.txt";
+            Console.WriteLine("Patient for appointment: ");
+            int patientToBook = int.Parse(Console.ReadLine());
+            Console.WriteLine("Appointment date (yyyy-MM-dd HH:mm): ");
+            DateTime dateAndTime = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("X");
+            Patient selectedPatient = _patients[patientToBook - 1];
+            selectedPatient.BookAppointmentDate(dateAndTime);
+            SeeAvailableDoctors();
+
+
+            string Name = "doctors.txt";
+            try
+            {
+                string[] docLines = System.IO.File.ReadAllLines(Name);
+                List<Doctor> _doctors = new List<Doctor>();
+                bool isFree;
+                foreach (string line in docLines)
+                {
+                    string[] partsLine = line.Split(":");
+
+                    string doctorType = partsLine[0];
+                    string doctorStuff = partsLine[1];
+                    string[] doctorDetails = doctorStuff.Split("||");
+                    string fName = doctorDetails[1];
+                    string lName = doctorDetails[0];
+                    int id = int.Parse(doctorDetails[3]);
+                    isFree = bool.Parse(doctorDetails[2]);
+                    Doctor doctor = new Doctor(fName, lName, doctorType, id, isFree);
+                    if (doctor.GetAvailabilityStatus())
+                    {
+                        _doctors.Add(doctor);
+                    }
+
+                }
+                Console.Write("Which Doctor would you like to book: ");
+                int doctorNumber = int.Parse(Console.ReadLine());
+                if (doctorNumber >= 1 && doctorNumber <= _doctors.Count)
+                {
+                    _doctors[doctorNumber - 1].SetAvailabilityStatus(false);
+                    Console.WriteLine($"{_doctors[doctorNumber - 1].GetName()} has been booked successfully");
+                }
+                else
+                {
+                    _doctors[doctorNumber - 1].SetAvailabilityStatus(true);
+                }
+                string file = "doctors.txt";
+                using (StreamWriter outputFile = new StreamWriter(file))
+                {
+                    foreach (Doctor doctor in _doctors)
+                    {
+                        outputFile.WriteLine($"{doctor.GetStringRepresentation()}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured: {ex.Message}");
+            }
+
+
+            using (StreamWriter outputFile = new StreamWriter(nameFile, true))
+            {
+                foreach(Patient p in _patients)
+                {
+                    {
+                        outputFile.WriteLine($"{p.GetStringRepresentation()}");
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occured: {ex.Message}");
+        }
     }
 }

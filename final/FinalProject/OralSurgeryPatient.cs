@@ -23,7 +23,7 @@ public class OralSurgeryPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_surgicalExo}||{_retainedRoot}:{base.GetType()}";
+        return  $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_surgicalExo}||{_retainedRoot}||{_appointmentDate}={base.GetType()}";
     }
 
 }

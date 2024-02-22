@@ -17,7 +17,7 @@ public class ConsPatient : Patient
     }
     public override string GetStringRepresentation()
     {
-        return $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_isNecrotic}:{base.GetType()}";
+        return $"{base.GetName()}||{base.GetGender()}||{base.GetAge()}||{base.GetId()}||{_isNecrotic}||{_appointmentDate}={base.GetType()}";
     }
 
 }
